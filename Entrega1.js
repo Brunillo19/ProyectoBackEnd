@@ -1,11 +1,22 @@
+const fs = require('fs');
 class ProductManager{
-    constructor(){
+    constructor(path){
         this.products=[];
-    
+    this.path=path;
     }  
     
-    
-    addProduct = ({title,description,price,thumbnail,code,stock})=>{
+    addProduct = async product => {
+        try {
+            this.products = JSON.parse(await fs.promises.readFile(this.path,'utf-8'));
+            const id = this.products.length===0?1:this.products[this.products.length-1].id+1;
+            this.products.push({id,...product});
+            await fs.promises.writeFile(this.path,JSON.stringify(this.products));
+            return "Producto agregado!"
+        } catch (error) {
+            return error
+        }
+    }
+    /* addProduct = ({title,description,price,thumbnail,code,stock})=>{
         if (!title || (title=="") ||  !description ||(description=="") || !price ||(price=="") || !thumbnail ||(thumbnail=="")|| !code ||(code=="")|| !stock||(stock=="")) return console.log("Todos los campos son requeridos");
 
         const validateCode = this.products.some(product=>product.code === code);
@@ -14,12 +25,15 @@ class ProductManager{
         else{
         const id = this.products.length===0?1:this.products[this.products.length-1].id+1;
         this.products.push({id,title,description,price,thumbnail,code,stock})}
-    }
+    } */
     getProducts= ()=>{return this.products};
-    getProductsbyId= (id) =>this.products.find(products=> products.id === id) || console.log("Not found");
-    
+    getProductsbyId= async id =>
+    {   thisthis.products = JSON.parse(await fs.promises.readFile(this.path,'utf-8'));
+        this.products.find(products=> products.id === id) || console.log("Not found");
+    }
+    deleteProduct
 }
-const NuevoProducto = new ProductManager();
+const NuevoProducto = new ProductManager('./db/db.json');
 
 
 NuevoProducto.addProduct({
@@ -42,7 +56,7 @@ NuevoProducto.addProduct({
     
 })
 /* Mostrando todos los productos añadidos */
-console.log(NuevoProducto.getProducts());
+
 /* Buscando un id que no coincide */
 console.error(NuevoProducto.getProductsbyId(2)); 
 
