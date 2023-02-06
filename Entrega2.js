@@ -81,10 +81,19 @@ NuevoProducto.addProduct({
     stock:'4'
     
 })
+NuevoProducto.addProduct({
+    title:'Mouse Logitech',
+    description:'Que bonito mouse =D',
+    price:'10000',
+    thumbnail:'link.png',
+    code:'12345',
+    stock:'45'
+    
+})
 
 
 
 
 NuevoProducto.getProducts()
-NuevoProducto.updateProduct(2,{title:"Monitor 32 Bangho"})
+NuevoProducto.updateProduct(1,{title:"Monitor 40 TopHouse"})
 
