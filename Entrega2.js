@@ -1,5 +1,6 @@
 const { log } = require('console');
 const fs = require('fs');
+const { title } = require('process');
 class ProductManager{
     constructor(path){
         this.products=[];
@@ -10,9 +11,15 @@ class ProductManager{
         try {
             this.products = JSON.parse(await fs.promises.readFile(this.path,'utf-8'));
             const id = this.products.length===0?1:this.products[this.products.length-1].id+1;
-            this.products.push({id,...product});
-            await fs.promises.writeFile(this.path,JSON.stringify(this.products));
-            return "Producto agregado!"
+            const NewProd={...product};
+            if (NewProd.code == this.products.code){
+                return "El producto ya existe"
+            }else{
+
+                this.products.push({id,...product});
+                await fs.promises.writeFile(this.path,JSON.stringify(this.products));
+                return "Producto agregado!"
+            }
         } catch (error) {
             return error
         }
@@ -20,6 +27,7 @@ class ProductManager{
     getProducts= async () => {
         try {
             return this.products = JSON.parse(await fs.promises.readFile(this.path,'utf-8'));
+
         } catch (error) {
             return error
         }
@@ -27,7 +35,8 @@ class ProductManager{
 
     getProductsbyId= async id =>
     {   this.products = JSON.parse(await fs.promises.readFile(this.path,'utf-8'));
-        this.products.find(products=> products.id === id) || console.log("Not found");
+        let ProdId=this.products.find(products=> products.id === id)|| console.log("Not found");
+        return ProdId
     }
     deleteProduct =async id =>{
         this.products = JSON.parse(await fs.promises.readFile(this.path,'utf-8'));
@@ -43,10 +52,13 @@ class ProductManager{
         let ProdMod = this.products.find(product => product.id == id);
         console.log(ProdMod);
         if (!ProdMod) return " Product Not Found";
-        let ProdIdx = this.products.findIndex(product => product.id == id);
-        this.products[ProdIdx] = { ...ProdMod, ...data };
-		await fs.promises.writeFile(this.path, JSON.stringify(this.products));
-		return 'Producto modificado correctamente';
+        else {
+
+            
+            this.products[id-1] = { ...ProdMod, ...data };
+            await fs.promises.writeFile(this.path, JSON.stringify(this.products));
+            return 'Producto modificado correctamente';
+        }
     };
 
 }
@@ -67,11 +79,9 @@ NuevoProducto.addProduct({
     
 })
 
-/* Buscando un id que no coincide */
-console.error(NuevoProducto.getProductsbyId(2)); 
 
 
-NuevoProducto.getProducts().then(res => console.log(res));
-NuevoProducto.deleteProduct(1).then(res=>console.log(res));
+
+NuevoProducto.getProducts()
 NuevoProducto.updateProduct(2,{title:"Monitor 32 Bangho"})
 
