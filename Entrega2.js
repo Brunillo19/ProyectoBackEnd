@@ -1,4 +1,4 @@
-const { log } = require('console');
+
 const fs = require('fs');
 const { title } = require('process');
 class ProductManager{
@@ -12,13 +12,16 @@ class ProductManager{
             this.products = JSON.parse(await fs.promises.readFile(this.path,'utf-8'));
             const id = this.products.length===0?1:this.products[this.products.length-1].id+1;
             const NewProd={...product};
-            if (NewProd.code == this.products.code){
-                return "El producto ya existe"
-            }else{
-
+            let Prueba =this.products.find(products => products.code == NewProd.code);
+            
+            if (!Prueba){
                 this.products.push({id,...product});
                 await fs.promises.writeFile(this.path,JSON.stringify(this.products));
                 return "Producto agregado!"
+                
+            }else{
+                return "El producto ya existe"
+                
             }
         } catch (error) {
             return error
@@ -50,8 +53,8 @@ class ProductManager{
     updateProduct=async(id,data)=>{
         this.products = JSON.parse(await fs.promises.readFile(this.path,'utf-8'));
         let ProdMod = this.products.find(product => product.id == id);
-        console.log(ProdMod);
-        if (!ProdMod) return " Product Not Found";
+    
+        if (!ProdMod) return 'Product Not Found';
         else {
 
             
