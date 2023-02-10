@@ -12,7 +12,7 @@ class ProductManager{
             this.products = JSON.parse(await fs.promises.readFile(this.path,'utf-8'));
             const id = this.products.length===0?1:this.products[this.products.length-1].id+1;
             const NewProd={...product};
-            let Prueba =this.products.find(products => products.code == NewProd.code);
+            let Prueba =this.products.find(products => products.id == NewProd.id);
             
             if (!Prueba){
                 this.products.push({id,...product});
@@ -81,19 +81,10 @@ NuevoProducto.addProduct({
     stock:'4'
     
 })
-NuevoProducto.addProduct({
-    title:'Mouse Logitech',
-    description:'Que bonito mouse =D',
-    price:'10000',
-    thumbnail:'link.png',
-    code:'12345',
-    stock:'45'
-    
-})
 
 
 
 
-NuevoProducto.getProducts()
-NuevoProducto.updateProduct(1,{title:"Monitor 40 TopHouse"})
+NuevoProducto.getProducts().then(res=>console.log(res));
+
 
