@@ -17,7 +17,7 @@ app.get('/products', async (req, res) => {
 app.get('/products/:pId', async (req, res) => {
 	const id = Number(req.params.pId);
 	const product = await NewProduct.getProductsbyId(id);
-	if (!product) return res.status(404).json({ message: 'Producto no encontrado' });
+	if (!product) return res.status(404).json({ message: 'El id ingresado es incorrecto o el producto no existe' });
 	res.status(200).json(product);
 });
 
