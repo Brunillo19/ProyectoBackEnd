@@ -36,7 +36,7 @@ class CartManager {
 	};
 	addProductToCart = async (CartId, ProdId) => {
 		const prod = await productManager.getProductById(ProdId);
-		const cart = await this.getProdsByCartId(CartId);
+		const cart = await this.getProductByCartId(CartId);
 		if (cart.some(item => item.product === prod.id)) {
 			const index = cart.findIndex(item => item.product === prod.id);
 			cart[index].quantity++;
