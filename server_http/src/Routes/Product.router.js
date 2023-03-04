@@ -17,6 +17,7 @@ router.get('/:ProdId',async(req,res)=> {
 });
 router.post('/',async (req,res)=> {
     const {title,description,code,price,status,stock,category,thumbnails} =req.body;
+    req.body.status=true
     if (!title || !description || !code || !price || !stock || !category || !status)
         return res.status(400).json({message:'Todos los campos son obligatorios'});
         await NewProd.addProduct(req.body)
