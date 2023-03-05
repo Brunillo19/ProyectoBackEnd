@@ -1,10 +1,8 @@
 
 
 const socket = io();
-
 const FormBtn = document.getElementById('btn-form');
 const form = document.getElementById('addNewProd');
-
 const newProd = e => {
 	e.preventDefault();
 	const data = new FormData(form);

@@ -1,6 +1,4 @@
-
 const fs = require('fs');
-
 class ProductManager{
     constructor(path){
         this.products=[];
@@ -30,7 +28,6 @@ class ProductManager{
     getProducts= async () => {
         try {
             return this.products = JSON.parse(await fs.promises.readFile(this.path,'utf-8'));
-
         } catch (error) {
             return error
         }
@@ -55,9 +52,7 @@ class ProductManager{
         let ProdMod = this.products.find(product => product.id == id);
     
         if (!ProdMod) return 'Product Not Found';
-        else {
-
-            
+        else {          
             this.products[id-1] = { ...ProdMod, ...data };
             await fs.promises.writeFile(this.path, JSON.stringify(this.products));
             return 'Producto modificado correctamente';

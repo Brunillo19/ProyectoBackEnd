@@ -9,6 +9,7 @@ router.get('/',async (req,res) =>{
     res.status(200).json(products);
 })
 
+
 router.get('/:ProdId',async(req,res)=> {
     const id = Number(req.params.ProdId);
     const product = await NewProd.getProductsbyId(id);

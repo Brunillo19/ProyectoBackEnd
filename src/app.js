@@ -11,7 +11,7 @@ const app = express();
 const PORT = 8080;
 const httpServer = app.listen(PORT, () => console.log(`Funcionando en PORT ${PORT} `));
 const socketServer = new Server(httpServer);
-const nuevoProducto = new ProductManager('src/db/db.json');
+const nuevoProducto = new ProductManager('db/db.json');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.engine("handlebars", handlebars.engine());
