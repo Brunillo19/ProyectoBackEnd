@@ -1,15 +1,22 @@
 <div>
 
     <h1>Productos</h1>
+        <div>
 
+        {{#each products}}
+<div>
         <h2>{{this.title}}</h2>
         <p><b>Descripción:</b> {{this.description}}</p>
         <p><b>Precio: $</b>{{this.price}}</p>
         <p><b>Código:</b> {{this.code}}</p>
         <p><b>Stock:</b> {{this.stock}}</p>
         <p><b>Thumbnail:</b> {{this.thumbnail}}</p>
-
+</div>
+    {{/each}}
+        </div>
+        {{else}}
     <p>No hay productos</p>
+    {{/if}}
 </div>
 
 
