@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const ProductManager = require('../ProductManager');
-const NewProd = new ProductManager('db/db.json');
+const NewProd = new ProductManager('src/db/db.json');
 
 router.get('/',async (req,res) =>{
     const limite = Number(req.query.limite);

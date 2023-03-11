@@ -29,7 +29,8 @@ class ProductManager{
         try {
             return this.products = JSON.parse(await fs.promises.readFile(this.path,'utf-8'));
         } catch (error) {
-            return error
+            if (error.errno === -4058) fs.writeFileSync(this.path, JSON.stringify(this.products));
+			return this.products;
         }
     }
 
