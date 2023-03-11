@@ -3,7 +3,7 @@ const router = require('express').Router();
 const CartManager = require('../CartManager')
 const NewCart = new CartManager('src/db/cart.json')
 
-router.post('/',async(req,res)=> {
+router.get('/',async(req,res)=> {
 	await NewCart.addCart();
 	res.status(200).json({message:'Carrito cargado correctamente'})
 })
